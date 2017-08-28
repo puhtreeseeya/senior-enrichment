@@ -1,13 +1,8 @@
-import { createStore } from 'redux'; 
+import { combineReducers } from 'redux'; 
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios'; 
 
 const GET_CAMPUSES = 'GET_CAMPUSES'; 
-
-//initial state
-const initialState = {
-	campuses : []
-}
 
 export function getCampuses(campuses) {
 	const action = { type: GET_CAMPUSES, campuses : campuses }; 
@@ -19,7 +14,6 @@ export function fetchAllCampuses() {
 		return axios.get('/api/campuses')
 		.then(res => res.data)
 		.then(campuses => {
-			console.log("HELLOOO", campuses); 
 			const action = getCampuses(campuses); 
 			dispatch(action); 
 		})
@@ -27,7 +21,12 @@ export function fetchAllCampuses() {
 }
 
 
-const reducer = function(state = initialState, action) {
+//initial state
+const initialState = {
+	campuses : []
+}
+
+const campusReducer = function(state = initialState, action) {
   switch(action.type) {
   	case GET_CAMPUSES : 
   		return Object.assign({}, state, { campuses: action.campuses }); 
@@ -36,6 +35,5 @@ const reducer = function(state = initialState, action) {
   }
 };
 
-const store = createStore(reducer); 
-export default store; 
+export default campusReducer; 
 

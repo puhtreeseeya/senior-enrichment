@@ -1,11 +1,10 @@
-import { combineReducers } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'; 
+import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const initialState = {}
+import campuses from './campuses'; 
 
-const rootReducer = function(state = initialState, action) {
-  switch(action.type) {
-    default: return state
-  }
-};
-
-export default rootReducer
+export default combineReducers({
+	campuses 
+});  
