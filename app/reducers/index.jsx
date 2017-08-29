@@ -5,6 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import campuses from './campuses'; 
 
-export default combineReducers({
+const reducer = combineReducers({
 	campuses 
 });  
+
+export default reducer; 
+
+
+
+
+//export action creators 
