@@ -2,10 +2,16 @@ import thunkMiddleware from 'redux-thunk';
 import axios from 'axios'; 
 
 const GET_CAMPUSES = 'GET_CAMPUSES'; 
+const ADD_NEW_CAMPUS = 'ADD_NEW_CAMPUS'; 
 
 export function getCampuses(campuses) {
-	const action = { type: GET_CAMPUSES, campusArr : campuses }; 
+	const action = { type : GET_CAMPUSES, campusArr : campuses }; 
 	return action; 
+}
+
+export function postNewCampus(campus) {
+	const action = { type : ADD_NEW_CAMPUS, newCampus : campus }
+	return action 
 }
 
 export function fetchAllCampuses() {
@@ -19,6 +25,19 @@ export function fetchAllCampuses() {
 	}
 }
 
+export function fetchNewCampus(campus) {
+	return function thunk (dispatch) {
+		return axios.post('/api/campuses', campus)
+		.then(res => res.data) 
+		.then(campus => {
+			const action = postNewCampus(campus); 
+			dispatch(action); 
+		}) 
+	}
+}
+
+
+
 
 //initial state
 const initialState = {
@@ -29,6 +48,8 @@ export default function reducer(state = initialState, action) {
   switch(action.type) {
   	case GET_CAMPUSES : 
   		return Object.assign({}, state, { campusArr: action.campusArr }); 
+  	case ADD_NEW_CAMPUS : 
+  		return Object.assign({}, state, { campusArr : state.campusArr.concat(action.newCampus)}); 
     default: 
     	return state
   }

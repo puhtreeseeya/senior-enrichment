@@ -44,17 +44,15 @@ api.get('/campuses/:id', (req, res) => {
 })
 
 api.post('/campuses', (req, res) => {
-	Campus.findOrCreate({
-		where: {
-			name: req.body.name
-		}
-	}).then(campus => {
-		console.log(campus);
+	Campus.create(req.body)
+	.then(campus => {
+		res.json(campus);
 	})
 })
 
 api.post('/users', (req, res) => {
-	User.create(req.body).then( user => {
+	User.create(req.body)
+	.then(user => {
 		res.json(user); 
 	})
 })

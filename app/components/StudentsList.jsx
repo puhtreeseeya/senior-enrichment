@@ -17,7 +17,7 @@ class StudentsList extends Component {
 	}
 	
 	render() {
-		console.log("HULLO" , this.props.users); 
+		console.log("CAMPUS STUDENTS LIST COMPONENT!!!!")
 		return (
 			<div>
 				<h3> Students: </h3> 
@@ -25,7 +25,7 @@ class StudentsList extends Component {
 				{
 					this.props.users.map((student, index) => {
 						return (
-							<li> {student.firstName} {student.lastName} </li> 
+							<li> {student.name} </li> 
 						)
 					})
 				}
