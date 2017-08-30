@@ -4,9 +4,11 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import campuses from './campuses'; 
+import users from './users'; 
 
 const reducer = combineReducers({
-	campuses 
+	campuses, 
+	users
 });  
 
 export default reducer; 

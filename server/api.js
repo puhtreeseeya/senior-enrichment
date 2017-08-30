@@ -20,6 +20,16 @@ api.get('/users/:id', (req, res) => {
 	})
 }); 
 
+api.get('/campuses/users/:id', (req, res) => {
+	User.findAll({
+		where: {
+			campusId : req.params.id
+		}
+	}).then(users => {
+		res.json(users); 
+	})
+})
+
 api.get('/campuses', (req, res) => {
 	Campus.findAll().then(campuses => {
 		res.json(campuses); 

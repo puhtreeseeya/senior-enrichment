@@ -6,3 +6,4 @@ import thunkMiddleware from 'redux-thunk'; // https://github.com/gaearon/redux-t
 export default createStore(rootReducer, applyMiddleware(thunkMiddleware, createLogger())); 
 
 export * from './reducers/campuses'; 
+export * from './reducers/users'; 
