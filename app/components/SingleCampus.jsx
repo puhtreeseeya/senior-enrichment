@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux'; 
-import store, { fetchStudentsFromCampus, fetchUpdateCampusName, fetchUpdateCampusImage, fetchDeleteStudent } from '../store';  
+import store, { fetchStudentsFromCampus, fetchUpdateCampusName, fetchUpdateCampusImage, fetchDeleteStudent, fetchNewStudent } from '../store';  
 
 const mapStateToProps = (state) => { 
 	return {
@@ -24,13 +24,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		removeStudent(event) {
 			event.preventDefault(); 
 			const studentId = event.target.value; 
-			console.log(studentId); 
 			const campusId = ownProps.match.params.id; 
 			dispatch(fetchDeleteStudent(studentId)); 
 			dispatch(fetchStudentsFromCampus(campusId)); 
+		}, 
+		addStudent(event) {
+			event.preventDefault();
+		  const studentName = event.target.newStudent.value; 
+			const studentEmail = event.target.newEmail.value; 
+			const student = { name : studentName, email : studentEmail, campusId: ownProps.match.params.id }; 
+			dispatch(fetchNewStudent(student)); 
+			dispatch(fetchStudentsFromCampus(ownProps.match.params.id)); 
 		}
 	}
-
 }
 
 
@@ -42,7 +48,6 @@ class StudentsList extends Component {
 	}
 	
 	render() {
-		console.log("CAMPUS STUDENTS LIST COMPONENT!!!!")
 		return (
 			<div>
 				<h3> Students: </h3> 
@@ -66,6 +71,17 @@ class StudentsList extends Component {
 						<input type="text" name="newImage" />
 						<button> # </button>
 					</form>  
+				</div> 
+
+				<div> 
+					<h3> Add Student To Campus: </h3> 
+					<form onSubmit={this.props.addStudent}>
+						<input className="form-control" type="text" name="newStudent" /> 
+						<input className="form-control"type="text" name="newEmail" /> 
+					<div className="form-group">
+ 						<button type="submit" className="btn btn-default">Submit</button>
+ 					</div>
+					</form> 
 				</div> 
 
 			</div> 

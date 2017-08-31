@@ -64,8 +64,9 @@ export function fetchNewStudent(student) {
 	return function thunk (dispatch) {
 		return axios.post('/api/users', student)
 		.then(res => res.data)
-		.then(success => {
-			console.log(success)
+		.then(student => {
+			const action = postNewStudent(student); 
+			dispatch(action); 
 		})
 	}
 }
