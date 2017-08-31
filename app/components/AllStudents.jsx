@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'; 
-import store, { fetchAllStudents } from '../store'; 
+import store, { fetchAllStudents, fetchDeleteStudent } from '../store'; 
 
 class AllStudents extends Component {
 	componentDidMount() {
@@ -15,8 +15,8 @@ class AllStudents extends Component {
 			<ul> 
 				{
 					this.props.users.map(student => {
-						return (
-							<Link to={`/students/${student.id}`}><li> {student.name} </li></Link> 
+						return (					
+								<li><Link to={`/students/${student.id}`}> {student.name} </Link> <button value={`${student.id}`} onClick={this.props.handleDelete}> X </button> </li>
 						)
 					})
 				}
@@ -33,4 +33,14 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps)(AllStudents); 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleDelete(event) {
+			const studentId = event.target.value; 
+			dispatch(fetchDeleteStudent(studentId)); 
+			dispatch(fetchAllStudents()); 
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllStudents); 

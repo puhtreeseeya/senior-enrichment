@@ -40,7 +40,7 @@ api.get('/campuses/users/:id', (req, res) => {
 	}).then(users => {
 		res.json(users); 
 	})
-})
+}); 
 
 api.get('/campuses', (req, res) => {
 	Campus.findAll().then(campuses => {
@@ -53,21 +53,59 @@ api.get('/campuses/:id', (req, res) => {
 	.then(campus => {
 		res.json(campus); 
 	})
-})
+}); 
 
 api.post('/campuses', (req, res) => {
 	Campus.create(req.body)
 	.then(campus => {
 		res.json(campus);
 	})
-})
+}); 
 
 api.post('/users', (req, res) => {
 	User.create(req.body)
 	.then(user => {
 		res.json(user); 
 	})
-})
+}); 
+
+//DELETES USER BY ID 
+api.post('/users/delete/:id', (req, res) => {
+	User.destroy({
+		where: {
+			id : req.params.id
+		}
+	}).then(succ => {
+		res.json(succ); 
+	})
+}); 
+
+api.post('/campuses/delete/:id', (req, res) => {
+	Campus.destroy({
+		where: {
+			id : req.params.id
+		}
+	}).then(succ => {
+		res.json(succ); 
+	})
+}); 
+
+api.post('/campuses/update_name/:id', (req, res) => {
+	Campus.update(
+		{ name : req.body.name}, 
+		{ where : { id : req.params.id}
+	}).then(succ => { res.json(succ)})
+
+}); 
+
+api.post('/campuses/update_image/:id', (req, res) => {
+	console.log("HLELO"); 
+	Campus.update(
+		{ image : req.body.image}, 
+		{ where : { id : req.params.id}
+	}).then(succ => { res.json(succ)})
+}); 
+
 
 
 

@@ -26,6 +26,7 @@ export function postNewStudent(student) {
 	return action; 
 }
 
+
 export function fetchStudentsFromCampus(campusId) {
 	return function thunk (dispatch) {
 		return axios.get('/api/campuses/users/' + campusId)
@@ -63,10 +64,15 @@ export function fetchNewStudent(student) {
 	return function thunk (dispatch) {
 		return axios.post('/api/users', student)
 		.then(res => res.data)
-		.then(student => {
-			const action = postNewStudent(student); 
-			dispatch(action); 
+		.then(success => {
+			console.log(success)
 		})
+	}
+}
+
+export function fetchDeleteStudent(studentId) {
+	return function thunk (dispatch) {
+		return axios.post('/api/users/delete/' + studentId, {})
 	}
 }
 

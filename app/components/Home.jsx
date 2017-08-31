@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'; 
 import Navbar from './Navbar'; 
 import CampusList from './CampusList'; 
-import StudentsList from './StudentsList';
+import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';  
 import AllStudents from './AllStudents'; 
 import NewStudent from './NewStudent'; 
@@ -14,17 +14,16 @@ export default class Home extends Component {
 		const campusThunk = fetchAllCampuses(); 
 		store.dispatch(campusThunk); 
 	}
-	
+
 	render() {
 		return (
-			<div> 
-				
+			<div> 	
 				<Router> 
 					<div> 
 						<Navbar /> 
 						<Switch> 
 							<Route exact path='/' component={CampusList} /> 
-							<Route path='/campuses/:id' component={StudentsList} /> 
+							<Route path='/campuses/:id' component={SingleCampus} /> 
 							<Route exact path='/students/' component={AllStudents} />
 							<Route path='/students/:id' component={SingleStudent} /> 
 							<Route path='/new-student' component={NewStudent} />

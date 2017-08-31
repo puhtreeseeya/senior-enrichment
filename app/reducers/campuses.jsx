@@ -53,6 +53,24 @@ export function fetchNewCampus(campus) {
 	}
 }
 
+export function fetchDeleteCampus(campusId) {
+	return function thunk (dispatch) {
+		return axios.post('/api/campuses/delete/' + campusId, {})
+	}
+}
+
+export function fetchUpdateCampusName(campusId, campus) {
+	return function thunk (dispatch) {
+		return axios.post('/api/campuses/update_name/' + campusId, campus); 
+	}
+}
+
+export function fetchUpdateCampusImage(campusId, campus) {
+	return function thunk (dispatch) {
+		return axios.post('/api/campuses/update_image/' + campusId, campus); 
+	}
+}
+
 
 
 

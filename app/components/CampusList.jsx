@@ -1,12 +1,21 @@
 import React, { Component } from 'react'; 
 import { Link } from 'react-router-dom'
-import store, { fetchAllCampuses } from '../store'; 
+import store, { fetchAllCampuses, fetchDeleteCampus } from '../store'; 
 import { connect } from 'react-redux'; 
-import StudentsList from './StudentsList'; 
 
 const mapStateToProps =  (state) => {
 	return {
 		campuses : state.campuses.campusArr
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleDelete(event) {
+			const campusId = event.target.value; 
+			dispatch(fetchDeleteCampus(campusId)); 
+			dispatch(fetchAllCampuses()); 
+		}
 	}
 }
 
@@ -25,17 +34,19 @@ class CampusList extends Component {
 				{
 					this.props.campuses.map((campus, index) => {
 						return (
-							<div className="col-xs-4" key={campus.id} value={campus.id}>
-							<Link to={`/campuses/${campus.id}`}> 
-								<a className="thumbnail" href="#" value={campus.id} >
-									<div className="caption"> 
-										<h5> 
-											<span value={campus.id}>{campus.name}</span> 
-										</h5> 
-									</div> 
-									<img src="http://newbrunswick.rutgers.edu/sites/flagship/files/styles/ru_slideshow_medium/public/NR09VisitorCenter6990_pg.jpg?itok=1ddaTUhE" value={campus.id}/> 
-								</a> 
-							</Link> 
+							
+							<div className="col-xs-4" key={campus.id}>
+								<div className="caption"> 
+									<h5> 
+										<span value={campus.id}>{campus.name}<button value={campus.id} onClick={this.props.handleDelete}> X </button></span> 
+									</h5> 
+								</div> 
+								<Link to={`/campuses/${campus.id}`}> 
+									<a className="thumbnail" href="#" value={campus.id} >
+										<img src={campus.image} value={campus.id}/> 
+									</a> 
+								</Link> 
+
 							</div>	
 						)
 					})
@@ -48,5 +59,5 @@ class CampusList extends Component {
 }
 
 
-export default connect(mapStateToProps)(CampusList); 
+export default connect(mapStateToProps, mapDispatchToProps)(CampusList); 
 
