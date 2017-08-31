@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { Link } from 'react-router-dom'
-import store, { fetchAllCampuses, fetchStudentsFromCampus } from '../store'; 
+import store, { fetchAllCampuses } from '../store'; 
 import { connect } from 'react-redux'; 
 import StudentsList from './StudentsList'; 
 
@@ -13,8 +13,7 @@ const mapStateToProps =  (state) => {
 
 class CampusList extends Component {
 	componentDidMount() {
-		const campusThunk = fetchAllCampuses(); 
-		store.dispatch(campusThunk); 
+		store.dispatch(fetchAllCampuses()); 
 	}
 
 	render() {

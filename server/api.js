@@ -20,6 +20,18 @@ api.get('/users/:id', (req, res) => {
 	})
 }); 
 
+//GETS CAMPUS BY USER ID 
+api.get('/users/campuses/:id', (req, res) => {
+	User.findById(req.params.id)
+	.then(user => {
+		Campus.findById(user.campusId)
+		.then(campus => {
+			res.json(campus); 
+		})
+	})
+}); 
+
+//GETS STUDENTS BY CAMPUS ID 
 api.get('/campuses/users/:id', (req, res) => {
 	User.findAll({
 		where: {

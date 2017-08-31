@@ -64,7 +64,7 @@ export function fetchNewStudent(student) {
 		return axios.post('/api/users', student)
 		.then(res => res.data)
 		.then(student => {
-			const action = getSingleStudent(student); 
+			const action = postNewStudent(student); 
 			dispatch(action); 
 		})
 	}

@@ -16,7 +16,7 @@ class AllStudents extends Component {
 				{
 					this.props.users.map(student => {
 						return (
-							<li> {student.name} </li>
+							<Link to={`/students/${student.id}`}><li> {student.name} </li></Link> 
 						)
 					})
 				}

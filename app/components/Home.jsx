@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'; 
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'; 
 import Navbar from './Navbar'; 
 import CampusList from './CampusList'; 
 import StudentsList from './StudentsList';
@@ -11,12 +11,10 @@ import store, { fetchAllCampuses, fetchAllStudents } from '../store';
 
 export default class Home extends Component {
 	componentDidMount() {
-		//const campusThunk = fetchAllCampuses();
-		const studentThunk =  fetchAllStudents(); 
-		//store.dispatch(campusThunk); 
-		store.dispatch(studentThunk); 
+		const campusThunk = fetchAllCampuses(); 
+		store.dispatch(campusThunk); 
 	}
-
+	
 	render() {
 		return (
 			<div> 
@@ -24,12 +22,14 @@ export default class Home extends Component {
 				<Router> 
 					<div> 
 						<Navbar /> 
-						<Route exact path='/' component={CampusList} /> 
-						<Route path='/campuses/:id' component={StudentsList} /> 
-						<Route exact path='/students/' component={AllStudents} /> 
-						<Route path='/students/:id' component={SingleStudent} /> 
-						<Route path='/new-student' component={NewStudent} />
-						<Route path='/new-campus' component={NewCampus} />
+						<Switch> 
+							<Route exact path='/' component={CampusList} /> 
+							<Route path='/campuses/:id' component={StudentsList} /> 
+							<Route exact path='/students/' component={AllStudents} />
+							<Route path='/students/:id' component={SingleStudent} /> 
+							<Route path='/new-student' component={NewStudent} />
+							<Route path='/new-campus' component={NewCampus} />
+						</Switch> 
 					</div> 
 				</Router> 
 			</div> 

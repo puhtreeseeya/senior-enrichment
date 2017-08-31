@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux'; 
-import store, { fetchSingleStudent } from '../store'; 
+import store, { fetchSingleStudent, fetchCampusFromStudent } from '../store'; 
 
 const mapStateToProps = (state) => {
 	return {
@@ -10,17 +10,19 @@ const mapStateToProps = (state) => {
 }
 
 class SingleStudent extends Component {
+
 	componentDidMount() {
-		const studentId = this.props.match.params.id; 
-		store.dispatch(fetchSingleStudent(studentId)); 
+	 	const studentId = this.props.match.params.id; 
+		store.dispatch(fetchSingleStudent(studentId));
+		store.dispatch(fetchCampusFromStudent(studentId)); 
 	}
 
 	render() {
-		console.log("HUULLO", this.props.users); 
-
 		return (
-			<h2>{this.props.users.name}</h2> 
-			<h4>this.props.</h4> 
+			<div> 
+				<h2>{this.props.users.name}</h2> 
+				<h2>{this.props.campuses.name}</h2> 
+			</div> 
 		)
 	}
 }
