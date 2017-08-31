@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps =  (state) => {
 	return {
-		campuses : state.campuses.campusArr
+		campuses : state.campuses
 	}
 }
 
@@ -17,8 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			dispatch(fetchAllCampuses()); 
 		}, 
 		handleSelectedCampus(event) {
-			event.preventDefault(); 
-			console.log("HELLOOOO", ownProps.history); 
+			event.preventDefault();
 			const campusId = event.target.getAttribute('value'); 
 			dispatch(fetchSingleCampus(campusId, ownProps.history)); 
 		}
@@ -28,7 +27,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 class CampusList extends Component {
 	componentDidMount() {
-		console.log("ZE PROPS", this.props); 
 		store.dispatch(fetchAllCampuses()); 
 	}
 

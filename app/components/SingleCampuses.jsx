@@ -1,26 +1,29 @@
 import React, { Component } from 'react'; 
 import { withRouter } from 'react-router'; 
 import { connect } from 'react-redux'; 
-import store, { fetchStudentsFromCampus, fetchUpdateCampusName, fetchUpdateCampusImage, fetchDeleteStudent, fetchNewStudent } from '../store';  
+import store, { fetchStudentsFromCampus, fetchUpdateCampusName, fetchUpdateCampusImage, fetchDeleteStudent, fetchNewStudent, fetchSingleCampus } from '../store';  
 
-const mapStateToProps = (state) => { 
+const mapStateToProps = (state) => {
 	return {
-		users : state.users.studentArr
+		users : state.users, 
+		campus : state.singleCampus
 	}
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		updateName(event) {
-			event.preventDefault(); 
+			event.preventDefault();
 			const campusId = ownProps.match.params.id; 
-			dispatch(fetchUpdateCampusName(campusId, { name : event.target.newName.value })); 
+			dispatch(fetchUpdateCampusName(campusId, { name : event.target.newName.value }));
+			dispatch(fetchSingleCampus(campusId)); 
 			event.target.newName.value = ''; 
 		}, 
 		updateImage(event) {
 			event.preventDefault(); 
 			const campusId = ownProps.match.params.id; 
 			dispatch(fetchUpdateCampusImage(campusId, { image : event.target.newImage.value })); 
+			dispatch(fetchSingleCampus(campusId)); 
 			event.target.newImage.value = ''; 
 		}, 
 		removeStudent(event) {
@@ -43,8 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	}
 }
 
-
-class StudentsList extends Component {
+class SingleCampuses extends Component {
 
 	componentDidMount() {
 		const campusId = this.props.match.params.id; 
@@ -52,9 +54,14 @@ class StudentsList extends Component {
 	}
 	
 	render() {
+		console.log(this.props); 
 		return (
 			<div>
-				<h3> Students: </h3> 
+				<div> 
+				<h3> Campus Name: {this.props.campus.name}</h3> 
+				<img src={this.props.campus.image}/>
+				</div> 
+				<h2>Student List :  </h2> 
 				<ul>
 				{
 					this.props.users.map((student, index) => {
@@ -92,8 +99,7 @@ class StudentsList extends Component {
 
 		)
 	}
-
 }
+export default connect(mapStateToProps, mapDispatchToProps)(SingleCampuses); 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StudentsList)); 
 

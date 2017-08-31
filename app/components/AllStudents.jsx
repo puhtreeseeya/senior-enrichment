@@ -8,6 +8,7 @@ class AllStudents extends Component {
 		store.dispatch(fetchAllStudents()); 
 	}
 	render() {
+		console.log(this.props); 
 		return (
 			<div> 
 			<Link to="/new-student"><button>+</button></Link> 
@@ -29,7 +30,8 @@ class AllStudents extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		users : state.users.studentArr
+		users : state.users, 
+		singleUser : state.singleStudent
 	}
 }
 
@@ -41,10 +43,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			dispatch(fetchAllStudents()); 
 		}, 
 		handleSelectedStudent(event) {
-			console.log(ownProps.history); 
+			event.preventDefault(); 
 			const studentId = event.target.getAttribute('value'); 
 			dispatch(fetchSingleStudent(studentId, ownProps.history))
-			event.preventDefault(); 
+			
+			
 
 		}
 	}

@@ -1,23 +1,18 @@
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios'; 
 
-const GET_STUDENTS_FROM_CAMPUS = 'GET_STUDENTS_FROM_CAMPUS'; 
+
 const GET_ALL_STUDENTS = 'GET_ALL_STUDENTS'; 
 const ADD_NEW_STUDENT = 'ADD_NEW_STUDENT'; 
-const GET_SINGLE_STUDENT = 'GET_SINGLE_STUDENT'; 
+const GET_STUDENTS_FROM_CAMPUS = 'GET_STUDENTS_FROM_CAMPUS'; 
 
 export function getStudentsFromCampus(students) {
-	const action = { type: GET_STUDENTS_FROM_CAMPUS, studentArr : students }; 
+	const action = { type: GET_STUDENTS_FROM_CAMPUS, students : students }; 
 	return action; 
 }
 
 export function getAllStudents(students) {
-	const action = { type: GET_ALL_STUDENTS, studentArr: students }; 
-	return action; 
-}
-
-export function getSingleStudent(student) {
-	const action = { type: GET_SINGLE_STUDENT, studentArr: student }; 
+	const action = { type: GET_ALL_STUDENTS, students: students }; 
 	return action; 
 }
 
@@ -50,28 +45,16 @@ export function fetchAllStudents(history) {
 	}
 }
 
-export function fetchSingleStudent(studentId, history) {
-	return function thunk (dispatch) {
-		return axios.get('/api/users/' + studentId) 
-		.then(res => res.data) 
-		.then(student => {
-			history.push(studentId); 
-			const action = getSingleStudent(student); 
-			dispatch(action); 
-			
-		})
-	}
-}
-
 export function fetchNewStudent(student, history) {
-	console.log()
+	console.log("hello", history); 
 	return function thunk (dispatch) {
 		return axios.post('/api/users', student)
 		.then(res => res.data)
 		.then(newStudent => {
-			
+			console.log(newStudent); 
 			const action = postNewStudent(newStudent); 
 			dispatch(action); 
+			if(history) history.push('/students/'+newStudent.id); 
 		})
 	}
 }
@@ -83,6 +66,7 @@ export function fetchDeleteStudent(studentId) {
 }
 
 export function fetchUpdateStudentCampus(studentId, campusId) {
+	console.log("SUPPPP"); 
 	return function thunk (dispatch) {
 		return axios.post('/api/users/update_campus/' + studentId, { campusId : campusId }) 
 	}
@@ -94,22 +78,14 @@ export function fetchUpdateStudentEmail(studentId, email) {
 	}
 }
 
-
-//initial state
-const initialState = {
-	studentArr : []
-}
-
-export default function reducer(state = initialState, action) {
+export default function reducer(state = [], action) {
   switch(action.type) {
   	case GET_STUDENTS_FROM_CAMPUS : 
-  		return Object.assign({}, state, { studentArr: action.studentArr }); 
+  		return action.students; 
     case GET_ALL_STUDENTS : 
-    	return Object.assign({}, state, { studentArr: action.studentArr });
-    case GET_SINGLE_STUDENT : 
-    	return Object.assign({}, state, { studentArr: action.studentArr }); 
+    	return action.students; 
     case ADD_NEW_STUDENT : 
-    	return Object.assign({}, state, { studentArr: state.studentArr.concat(action.newStudent)}); 
+    	return [...state, action.newStudent]; 
     default: 
     	return state
   }

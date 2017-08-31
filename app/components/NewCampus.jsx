@@ -9,16 +9,14 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		handleNewCampus(event) {
 			event.preventDefault();
 			const name = event.target.newCampusName.value; 
 			const imageUrl = event.target.imageUrl.value; 
 			const newCampus = { name: name, image: imageUrl }
-			dispatch(fetchNewCampus(newCampus));
-			event.target.newCampusName.value = ''; 
-			event.target.imageUrl.value = ''; 
+			dispatch(fetchNewCampus(newCampus, ownProps.history));
 		}
 	}
 }

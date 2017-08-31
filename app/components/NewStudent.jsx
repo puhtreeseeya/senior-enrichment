@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const mapStateToProps = (state) => {
 	return {
-		campuses : state.campuses.campusArr
+		campuses : state.campuses
 	}
 }
 
@@ -15,8 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			event.preventDefault();
 			const name = event.target.newNameInput.value; 
 			const campusId = event.target.pickedCampus.value; 
-			const newStudent = { name: name, campusId: campusId }
-			dispatch(fetchNewStudent(newStudent));
+			const email = event.target.newEmailInput.value; 
+			const newStudent = { name: name, campusId: campusId, email: email}
+			dispatch(fetchNewStudent(newStudent, ownProps.history));
 		}
 	}
 }
@@ -30,6 +31,7 @@ class NewStudent extends Component {
 				<h3> Add Person: </h3> 
 				<form onSubmit={this.props.handleAddPerson}>
 					<input className="form-control" type="text" name="newNameInput" placeholder="Name"/>
+					<input className="form-control" type="text" name="newEmailInput" placeholder="Email"/>
 					<select name="pickedCampus">
 						{
 							this.props.campuses.map(campus => {

@@ -5,19 +5,19 @@ import axios from 'axios';
 
 const mapStateToProps = (state) => {
 	return {
-		users : state.users.studentArr, 
-		campuses : state.campuses.campusArr
+		users : state.singleStudent,
+		campuses : state.singleCampus
 	}
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		handleNewCampus(event) {
-			event.preventDefault(); 
+			event.preventDefault();
 			const campusId = event.target.newCampus.value; 
 			dispatch(fetchUpdateStudentCampus(ownProps.match.params.id, campusId));
 			dispatch(fetchCampusFromStudent(ownProps.match.params.id));  
-			event.target.newCampus.value = ''; 
+			// event.target.newCampus.value = ''; 
 		}, 
 		handleNewEmail(event) {
 			event.preventDefault(); 
@@ -60,7 +60,6 @@ class SingleStudent extends Component {
 	}
 
 	render() {
-		console.log("ZE SINGLE STUDENT", this.props); 
 		return (
 			<div> 
 				<h2>Name : {this.props.users.name}</h2> 
