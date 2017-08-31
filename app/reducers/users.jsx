@@ -77,6 +77,12 @@ export function fetchDeleteStudent(studentId) {
 	}
 }
 
+export function fetchUpdateStudentCampus(studentId, campusId) {
+	console.log("SUPPPNIGGA", studentId, campusId); 
+	return function thunk (dispatch) {
+		return axios.post('/api/users/update_campus/' + studentId, { campusId : campusId }) 
+	}
+}
 
 
 //initial state

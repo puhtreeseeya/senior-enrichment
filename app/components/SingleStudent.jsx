@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux'; 
-import store, { fetchSingleStudent, fetchCampusFromStudent } from '../store'; 
+import store, { fetchSingleStudent, fetchCampusFromStudent, fetchUpdateStudentCampus } from '../store'; 
 import axios from 'axios'; 
 
 const mapStateToProps = (state) => {
@@ -10,11 +10,14 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		handleNewCampus(event) {
 			event.preventDefault(); 
-			console.log("UPWASSI");
+			const campusId = event.target.newCampus.value; 
+			console.log(campusId); 
+			dispatch(fetchUpdateStudentCampus(ownProps.match.params.id, campusId));
+			dispatch(fetchCampusFromStudent(ownProps.match.params.id));  
 		}
 	}
 }
@@ -69,6 +72,7 @@ class SingleStudent extends Component {
 						<div className="form-group">
 							<button type="submit" className="btn btn-default">Submit</button>
 						</div>
+						
 					</form> 
 				</div> 
 			</div> 

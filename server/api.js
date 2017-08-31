@@ -99,9 +99,15 @@ api.post('/campuses/update_name/:id', (req, res) => {
 }); 
 
 api.post('/campuses/update_image/:id', (req, res) => {
-	console.log("HLELO"); 
 	Campus.update(
 		{ image : req.body.image}, 
+		{ where : { id : req.params.id}
+	}).then(succ => { res.json(succ)})
+}); 
+
+api.post('/users/update_campus/:id', (req, res) => {
+	User.update(
+		{ campusId : req.body.campusId}, 
 		{ where : { id : req.params.id}
 	}).then(succ => { res.json(succ)})
 }); 
