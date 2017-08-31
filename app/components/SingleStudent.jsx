@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { connect } from 'react-redux'; 
-import store, { fetchSingleStudent, fetchCampusFromStudent, fetchUpdateStudentCampus } from '../store'; 
+import store, { fetchSingleStudent, fetchCampusFromStudent, fetchUpdateStudentCampus, fetchUpdateStudentEmail } from '../store'; 
 import axios from 'axios'; 
 
 const mapStateToProps = (state) => {
@@ -18,6 +18,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			console.log(campusId); 
 			dispatch(fetchUpdateStudentCampus(ownProps.match.params.id, campusId));
 			dispatch(fetchCampusFromStudent(ownProps.match.params.id));  
+		}, 
+		handleNewEmail(event) {
+			event.preventDefault(); 
+			const email = event.target.newEmail.value; 
+			const studentId = ownProps.match.params.id; 
+			dispatch(fetchUpdateStudentEmail(studentId, email)); 
+			dispatch(fetchSingleStudent(studentId)); 
 		}
 	}
 }
@@ -56,9 +63,10 @@ class SingleStudent extends Component {
 			<div> 
 				<h2>Name : {this.props.users.name}</h2> 
 				<h2>Campus : {this.props.campuses.name}</h2> 
+				<h2>Email : {this.props.users.email} </h2> 
 
 				<div> 
-					<h3> Change Campus : </h3>
+					<h3> Update Campus : </h3>
 					<form onSubmit={this.props.handleNewCampus}>
 						<select name="newCampus">
 						{
@@ -71,8 +79,15 @@ class SingleStudent extends Component {
 						</select>
 						<div className="form-group">
 							<button type="submit" className="btn btn-default">Submit</button>
-						</div>
-						
+						</div>		
+					</form> 
+				</div> 
+
+				<div> 
+					<h3> Update Student Details : </h3> 
+					<form onSubmit={this.props.handleNewEmail}> 
+						<input className="form-control" type="text" name="newEmail" placeholder="Email"/> 
+						<button type="submit" className="btn btn-default">Submit</button>
 					</form> 
 				</div> 
 			</div> 

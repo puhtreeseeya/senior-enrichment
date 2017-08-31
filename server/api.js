@@ -112,6 +112,12 @@ api.post('/users/update_campus/:id', (req, res) => {
 	}).then(succ => { res.json(succ)})
 }); 
 
+api.post('/users/update_email/:id', (req, res) => {
+	User.update(
+		{ email : req.body.email}, 
+		{ where : { id : req.params.id}
+	}).then(succ => { res.json(succ)})
+})
 
 
 
