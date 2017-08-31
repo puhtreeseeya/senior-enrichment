@@ -3,10 +3,16 @@ import axios from 'axios';
 
 const GET_CAMPUSES = 'GET_CAMPUSES'; 
 const ADD_NEW_CAMPUS = 'ADD_NEW_CAMPUS'; 
-const GET_CAMPUS_FROM_STUDENT = 'GET_CAMPUS_FROM_STUDENT'; 
+const GET_CAMPUS_FROM_STUDENT = 'GET_CAMPUS_FROM_STUDENT';
+const GET_SINGLE_CAMPUS = 'GET_SINGLE_CAMPUS';  
 
 export function getCampuses(campuses) {
 	const action = { type : GET_CAMPUSES, campusArr : campuses }; 
+	return action; 
+}
+
+export function getSingleCampus(campus) {
+	const action = { type : GET_SINGLE_CAMPUS, campusArr : campus }; 
 	return action; 
 }
 
@@ -20,13 +26,31 @@ export function postNewCampus(campus) {
 	return action 
 }
 
-export function fetchAllCampuses() {
+export function fetchAllCampuses(history) {
 	return function thunk (dispatch) {
 		return axios.get('/api/campuses')
 		.then(res => res.data)
 		.then(campuses => {
+			console.log(history); 
 			const action = getCampuses(campuses); 
 			dispatch(action); 
+			if(history) history.push("/"); 
+		})
+	}
+}
+
+export function fetchSingleCampus(campusId, history) {
+	console.log("HELLO"); 
+	console.log('/api/campuses/'+campusId)
+	return function thunk (dispatch) {
+		return axios.get('/api/campuses/'+campusId)
+		.then(res => res.data)
+		.then(campus => {
+			console.log(campus);  
+			history.push('/campuses/'+campusId);
+			const action = getSingleCampus(campus); 
+			dispatch(action); 
+			
 		})
 	}
 }
@@ -83,6 +107,8 @@ export default function reducer(state = initialState, action) {
   switch(action.type) {
   	case GET_CAMPUSES : 
   		return Object.assign({}, state, { campusArr: action.campusArr }); 
+  	case GET_SINGLE_CAMPUS : 
+  		return Object.assign({}, state, { campusArr : action.campusArr }); 
   	case GET_CAMPUS_FROM_STUDENT : 
   		return Object.assign({}, state, { campusArr : action.campusArr }); 
   	case ADD_NEW_CAMPUS : 

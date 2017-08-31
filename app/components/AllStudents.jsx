@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'; 
-import store, { fetchAllStudents, fetchDeleteStudent } from '../store'; 
+import store, { fetchAllStudents, fetchDeleteStudent, fetchSingleStudent } from '../store'; 
 
 class AllStudents extends Component {
 	componentDidMount() {
@@ -16,7 +16,7 @@ class AllStudents extends Component {
 				{
 					this.props.users.map(student => {
 						return (					
-								<li><Link to={`/students/${student.id}`}> {student.name} </Link> <button value={`${student.id}`} onClick={this.props.handleDelete}> X </button> </li>
+								<li><a onClick={this.props.handleSelectedStudent} value={student.id}>{student.name}</a> <button value={`${student.id}`} onClick={this.props.handleDelete}> X </button> </li>
 						)
 					})
 				}
@@ -33,12 +33,19 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		handleDelete(event) {
 			const studentId = event.target.value; 
 			dispatch(fetchDeleteStudent(studentId)); 
 			dispatch(fetchAllStudents()); 
+		}, 
+		handleSelectedStudent(event) {
+			console.log(ownProps.history); 
+			const studentId = event.target.getAttribute('value'); 
+			dispatch(fetchSingleStudent(studentId, ownProps.history))
+			event.preventDefault(); 
+
 		}
 	}
 }

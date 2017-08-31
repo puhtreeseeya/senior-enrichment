@@ -17,6 +17,8 @@ const mapDispatchToProps = (dispatch) => {
 			const imageUrl = event.target.imageUrl.value; 
 			const newCampus = { name: name, image: imageUrl }
 			dispatch(fetchNewCampus(newCampus));
+			event.target.newCampusName.value = ''; 
+			event.target.imageUrl.value = ''; 
 		}
 	}
 }

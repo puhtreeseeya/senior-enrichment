@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import { Link } from 'react-router-dom'
-import store, { fetchAllCampuses, fetchDeleteCampus } from '../store'; 
+import store, { fetchAllCampuses, fetchDeleteCampus, fetchSingleCampus } from '../store'; 
 import { connect } from 'react-redux'; 
 
 const mapStateToProps =  (state) => {
@@ -9,12 +9,18 @@ const mapStateToProps =  (state) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		handleDelete(event) {
 			const campusId = event.target.value; 
 			dispatch(fetchDeleteCampus(campusId)); 
 			dispatch(fetchAllCampuses()); 
+		}, 
+		handleSelectedCampus(event) {
+			event.preventDefault(); 
+			console.log("HELLOOOO", ownProps.history); 
+			const campusId = event.target.getAttribute('value'); 
+			dispatch(fetchSingleCampus(campusId, ownProps.history)); 
 		}
 	}
 }
@@ -22,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 
 class CampusList extends Component {
 	componentDidMount() {
+		console.log("ZE PROPS", this.props); 
 		store.dispatch(fetchAllCampuses()); 
 	}
 
@@ -41,12 +48,9 @@ class CampusList extends Component {
 										<span value={campus.id}>{campus.name}<button value={campus.id} onClick={this.props.handleDelete}> X </button></span> 
 									</h5> 
 								</div> 
-								<Link to={`/campuses/${campus.id}`}> 
-									<a className="thumbnail" href="#" value={campus.id} >
+									<a className="thumbnail" value={campus.id} onClick={this.props.handleSelectedCampus}>
 										<img src={campus.image} value={campus.id}/> 
 									</a> 
-								</Link> 
-
 							</div>	
 						)
 					})

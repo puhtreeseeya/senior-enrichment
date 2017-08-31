@@ -15,9 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		handleNewCampus(event) {
 			event.preventDefault(); 
 			const campusId = event.target.newCampus.value; 
-			console.log(campusId); 
 			dispatch(fetchUpdateStudentCampus(ownProps.match.params.id, campusId));
 			dispatch(fetchCampusFromStudent(ownProps.match.params.id));  
+			event.target.newCampus.value = ''; 
 		}, 
 		handleNewEmail(event) {
 			event.preventDefault(); 
@@ -25,6 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			const studentId = ownProps.match.params.id; 
 			dispatch(fetchUpdateStudentEmail(studentId, email)); 
 			dispatch(fetchSingleStudent(studentId)); 
+			event.target.newEmail.value = ''; 
 		}
 	}
 }
@@ -52,13 +53,14 @@ class SingleStudent extends Component {
 
 	componentDidMount() {
 	 	const studentId = this.props.match.params.id; 
+	 	console.log(this.props.match.params.id); 
 		store.dispatch(fetchSingleStudent(studentId));
 		store.dispatch(fetchCampusFromStudent(studentId)); 
 		this.getAllCampuses(); 
 	}
 
 	render() {
-		console.log(this.state.allCampuses); 
+		console.log("ZE SINGLE STUDENT", this.props); 
 		return (
 			<div> 
 				<h2>Name : {this.props.users.name}</h2> 

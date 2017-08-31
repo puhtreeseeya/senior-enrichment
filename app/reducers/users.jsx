@@ -38,34 +38,39 @@ export function fetchStudentsFromCampus(campusId) {
 	}
 }
 
-export function fetchAllStudents() {
+export function fetchAllStudents(history) {
 	return function thunk (dispatch) {
 		return axios.get('/api/users')
 		.then(res => res.data)
 		.then(students => {
 			const action = getAllStudents(students); 
 			dispatch(action); 
+			if(history) history.push('/students/'); 
 		})
 	}
 }
 
-export function fetchSingleStudent(studentId) {
+export function fetchSingleStudent(studentId, history) {
 	return function thunk (dispatch) {
 		return axios.get('/api/users/' + studentId) 
 		.then(res => res.data) 
 		.then(student => {
+			history.push(studentId); 
 			const action = getSingleStudent(student); 
 			dispatch(action); 
+			
 		})
 	}
 }
 
-export function fetchNewStudent(student) {
+export function fetchNewStudent(student, history) {
+	console.log()
 	return function thunk (dispatch) {
 		return axios.post('/api/users', student)
 		.then(res => res.data)
-		.then(student => {
-			const action = postNewStudent(student); 
+		.then(newStudent => {
+			
+			const action = postNewStudent(newStudent); 
 			dispatch(action); 
 		})
 	}

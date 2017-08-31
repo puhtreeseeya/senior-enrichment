@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom'; 
+import { Link, NavLink, withRouter } from 'react-router-dom'; 
+import { connect } from 'react-redux'; 
+import { fetchAllCampuses, fetchAllStudents } from '../store'
 
-export default class Navbar extends Component {
+class Navbar extends Component {
 	render() {
 		return (
 			<nav> 
-				<NavLink to='/'><button>Home</button></NavLink>
-				<NavLink to='/students/'><button>Students</button></NavLink>
+				<button onClick={this.props.handleHome}>Home</button>
+				<button onClick={this.props.handleStudents}>Students</button>
 			</nav> 
 		)
 	}
 }
+
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+	return {
+		handleHome(event) {
+			dispatch(fetchAllCampuses(ownProps.history))
+		}, 
+		handleStudents(event) {
+			dispatch(fetchAllStudents(ownProps.history)); 
+		}
+	}
+}
+
+const mapStateToProps = (state) => {
+	return {}
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
