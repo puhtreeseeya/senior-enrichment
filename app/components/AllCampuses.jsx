@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 			dispatch(fetchAllCampuses()); 
 		}, 
 		handleSelectedCampus(event) {
+			console.log(event.target); 
 			event.preventDefault();
 			const campusId = event.target.getAttribute('value'); 
 			dispatch(fetchSingleCampus(campusId, ownProps.history)); 
@@ -32,30 +33,29 @@ class CampusList extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row">
+			<div>
 				<Link to="/new-campus"><button className="btn btn-success btn-lg">Add Campus</button></Link> 
+			<div className="container">
+			<div className="row">
 				<h3> Campuses: </h3> 
-				<div className="row">
 					{
 						this.props.campuses.map((campus, index) => {
 							return (
-								
-								<div className="col-xs-4" key={campus.id}>
-									<div className="caption"> 
-										<h5> 
-											<span value={campus.id}>{campus.name}<button className="btn btn-danger" value={campus.id} onClick={this.props.handleDelete}> X </button></span> 
-										</h5> 
+								<div className={((index+1) % 3 === 0) ? "row" : "" }>
+								<div className="col-sm-4" key={campus.id}>
+									<div className="caption row"> 
+" value={campus.id} onClick={this.props.handleDelete}> X </button></span> 
 									</div> 
-										<a className="thumbnail" value={campus.id} onClick={this.props.handleSelectedCampus}>
-											<img src={campus.image} value={campus.id}/> 
+										<a className="thumbnail" onClick={this.props.handleSelectedCampus}>
+											<div value={campus.id} className='campusImg' style={{backgroundImage : `url(${campus.image})`}}> </div>
 										</a> 
 								</div>	
+								</div> 
 							)
 						})
 					}
-				</div> 
 				</div>
+				</div>  
 			</div>
 		)
 

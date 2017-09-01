@@ -47,6 +47,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 class SingleCampuses extends Component {
+	constructor() {
+		super(); 
+		this.state = {
+			
+		}
+	}
 
 	componentDidMount() {
 		const campusId = this.props.match.params.id; 
@@ -80,7 +86,7 @@ class SingleCampuses extends Component {
 						<div className="input-group">
 							<input className="form-control" type="text" name="newName" placeholder="Campus Name" />
 							<div className="input-group-btn">
-								<button className="btn btn-default"> # </button>
+								<button className="btn btn-default"> Update </button>
 							</div> 
 						</div> 
 						</form>  
@@ -88,7 +94,7 @@ class SingleCampuses extends Component {
 						<div className="input-group">
 							<input className="form-control" type="text" name="newImage" placeholder="Image Url"/>
 							<div className="input-group-btn">
-								<button className="btn btn-default"> # </button>
+								<button className="btn btn-default"> Update </button>
 							</div>
 						</div>
 						</form>  
