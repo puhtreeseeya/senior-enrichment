@@ -56,46 +56,59 @@ class SingleCampuses extends Component {
 	render() {
 		console.log(this.props); 
 		return (
-			<div>
-				<div> 
-				<h3> Campus Name: {this.props.campus.name}</h3> 
-				<img src={this.props.campus.image}/>
-				</div> 
-				<h2>Student List :  </h2> 
-				<ul>
-				{
-					this.props.users.map((student, index) => {
-						return (
-							<li> {student.name} <button value={`${student.id}`} onClick={this.props.removeStudent}> X </button></li> 
-						)
-					})
-				}
-				</ul> 
+			<div className="container">
+				<div className="row">
+					 
+					<h3> Campus Name: {this.props.campus.name}</h3> 
+					
+				
+					<h2>Student List :  </h2> 
+					<ul>
+					{
+						this.props.users.map((student, index) => {
+							return (
+								<li> {student.name} <button value={`${student.id}`} onClick={this.props.removeStudent}> X </button></li> 
+							)
+						})
+					}
+					</ul> 
 
-				<div> 
-					<h3> Update Campus: </h3>  
-					<form onSubmit={this.props.updateName}>
-						<input type="text" name="newName" placeholder="Campus Name" />
-						<button> # </button>
-					</form>  
-					<form onSubmit={this.props.updateImage}>
-						<input type="text" name="newImage" placeholder="Image Url"/>
-						<button> # </button>
-					</form>  
-				</div> 
 
-				<div> 
-					<h3> Add Student To Campus: </h3> 
-					<form onSubmit={this.props.addStudent}>
-						<input className="form-control" type="text" name="newStudent" placeholder="Student Name"/> 
-						<input className="form-control"type="text" name="newEmail" placeholder="Student Email" /> 
-					<div className="form-group">
- 						<button type="submit" className="btn btn-default">Submit</button>
- 					</div>
-					</form> 
-				</div> 
+					<div> 
+						<h3> Update Campus: </h3>  
+						<form onSubmit={this.props.updateName}>
+						<div className="input-group">
+							<input className="form-control" type="text" name="newName" placeholder="Campus Name" />
+							<div className="input-group-btn">
+								<button className="btn btn-default"> # </button>
+							</div> 
+						</div> 
+						</form>  
+						<form onSubmit={this.props.updateImage}>
+						<div className="input-group">
+							<input className="form-control" type="text" name="newImage" placeholder="Image Url"/>
+							<div className="input-group-btn">
+								<button className="btn btn-default"> # </button>
+							</div>
+						</div>
+						</form>  
+					</div> 
 
-			</div> 
+					<div> 
+						<h3> Add Student To Campus: </h3> 
+							<form onSubmit={this.props.addStudent}>
+							<div className="form-group">
+								<input className="form-control" type="text" name="newStudent" placeholder="Student Name"/> 
+								<input className="form-control"type="text" name="newEmail" placeholder="Student Email" /> 
+							
+		 						<button type="submit" className="btn btn-default">Submit</button>
+		 					</div>
+							</form> 
+					</div> 
+
+				</div> 
+			</div>
+
 
 		)
 	}

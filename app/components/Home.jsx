@@ -17,20 +17,22 @@ class Home extends Component {
 
 	render() {
 		return (
-			<div> 	
-				<Router> 
-					<div> 
-						<Navbar /> 
-						<Switch> 
-							<Route exact path='/' component={AllCampuses} /> 
-							<Route exact path='/campuses/:id' component={SingleCampus} /> 
-							<Route exact path='/students/' component={AllStudents} />
-							<Route exact path='/students/:id' component={SingleStudent} />
-							<Route exact path='/new-student' component={NewStudent} />
-							<Route exact path='/new-campus' component={NewCampus} />
-						</Switch> 
-					</div> 
-				</Router> 
+			<div className="container">
+				<div className="row"> 	
+					<Router> 
+						<div> 
+							<Navbar /> 
+							<Switch> 
+								<Route exact path='/' component={AllCampuses} /> 
+								<Route exact path='/campuses/:id' component={SingleCampus} /> 
+								<Route exact path='/students/' component={AllStudents} />
+								<Route exact path='/students/:id' component={SingleStudent} />
+								<Route exact path='/new-student' component={NewStudent} />
+								<Route exact path='/new-campus' component={NewCampus} />
+							</Switch> 
+						</div> 
+					</Router> 
+				</div> 
 			</div> 
 		)
 	}

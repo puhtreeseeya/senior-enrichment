@@ -32,28 +32,30 @@ class CampusList extends Component {
 
 	render() {
 		return (
-			<div>
-			<Link to="/new-campus"><button>+</button></Link> 
-			<h3> Campuses: </h3> 
-			<div className="row">
-				{
-					this.props.campuses.map((campus, index) => {
-						return (
-							
-							<div className="col-xs-4" key={campus.id}>
-								<div className="caption"> 
-									<h5> 
-										<span value={campus.id}>{campus.name}<button value={campus.id} onClick={this.props.handleDelete}> X </button></span> 
-									</h5> 
-								</div> 
-									<a className="thumbnail" value={campus.id} onClick={this.props.handleSelectedCampus}>
-										<img src={campus.image} value={campus.id}/> 
-									</a> 
-							</div>	
-						)
-					})
-				}
-			</div> 
+			<div className="container">
+				<div className="row">
+				<Link to="/new-campus"><button className="btn btn-success btn-lg">Add Campus</button></Link> 
+				<h3> Campuses: </h3> 
+				<div className="row">
+					{
+						this.props.campuses.map((campus, index) => {
+							return (
+								
+								<div className="col-xs-4" key={campus.id}>
+									<div className="caption"> 
+										<h5> 
+											<span value={campus.id}>{campus.name}<button className="btn btn-danger" value={campus.id} onClick={this.props.handleDelete}> X </button></span> 
+										</h5> 
+									</div> 
+										<a className="thumbnail" value={campus.id} onClick={this.props.handleSelectedCampus}>
+											<img src={campus.image} value={campus.id}/> 
+										</a> 
+								</div>	
+							)
+						})
+					}
+				</div> 
+				</div>
 			</div>
 		)
 
